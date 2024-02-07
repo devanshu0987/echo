@@ -36,4 +36,22 @@ class EchoApplicationTests {
                 .andExpect(status().isOk()).andExpect(content().string(payload.toString()));
     }
 
+    @Test
+    void testWrongMediaType() throws Exception {
+        String payloadString = "{\"game\":\"Mobile Legends\", \"gamerID\":\"GYUTDTE\", \"points\":20}";
+        JSONObject payload = new JSONObject(payloadString);
+        this.mockMvc
+                .perform(post("/echo").contentType(MediaType.TEXT_PLAIN).content(payload.toString()))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void testInvalidPayload() throws Exception {
+        String payloadString = "{\"game\":\"Mobile Legends\", \"gamerID\":\"GYUTDTE\", \"points\":20}";
+        JSONObject payload = new JSONObject(payloadString);
+        this.mockMvc
+                .perform(post("/echo").contentType(MediaType.APPLICATION_JSON).content(payload.toString().substring(1)))
+                .andExpect(status().is4xxClientError());
+    }
+
 }
