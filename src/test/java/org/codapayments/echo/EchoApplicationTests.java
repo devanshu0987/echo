@@ -54,4 +54,13 @@ class EchoApplicationTests {
                 .andExpect(status().is4xxClientError());
     }
 
+    @Test
+    void testEchoV2() throws Exception {
+        String payloadString = "{\"game\":\"Mobile Legends\", \"gamerID\":\"GYUTDTE\", \"points\":20}";
+        JSONObject payload = new JSONObject(payloadString);
+        this.mockMvc
+                .perform(post("/v2/echo?delay=5").contentType(MediaType.APPLICATION_JSON).content(payload.toString()))
+                .andExpect(status().isOk()).andExpect(content().string(payload.toString()));
+    }
+
 }
