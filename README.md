@@ -9,6 +9,10 @@
   - Response body will contain the same payload that was passed with `200 OK`
   - Only `application/json` Content type is supported.
     - Any other Content type will return with `415 Unsupported Media Type`
+- `/v2/echo?delay={IntegerValue}`
+  - Similar properties like `/echo`
+  - `?delay={IntegerValue}` if used, will delay the response for `{IntegerValue}` seconds
+  - This helps in showing the behaviour of upstream Routing service in case of increased Latency.
 
 ## How to run the server
 - Get the codebase
